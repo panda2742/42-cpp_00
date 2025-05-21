@@ -6,13 +6,14 @@
 /*   By: ehosta <ehosta@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 11:41:43 by ehosta            #+#    #+#             */
-/*   Updated: 2025/05/21 17:08:09 by ehosta           ###   ########.fr       */
+/*   Updated: 2025/05/21 17:22:02 by ehosta           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <istream>
 #include "PhoneBook.hpp"
 #include "types.hpp"
 
@@ -22,7 +23,11 @@ static void _ask_input(Contact &c, const std::string &prompt, Setter setter, int
 	std::cout << prompt << std::endl;
 	while (true) {
 		std::cout << "> ";
-		std::getline(std::cin, input);
+		if (!std::getline(std::cin, input)) {
+			std::cout << BLACK "(Aborting...)" RESET << std::endl;
+			*status = EXIT_FAILURE;
+			break ;
+		}
 		if (input.length() == 0) {
 			std::cout <<
 				RED "Field cannot be empty. Enter 'EXIT' to abort." RESET <<
@@ -68,19 +73,27 @@ static void _add_prompt(PhoneBook &phonebook) {
 
 static void _search_prompt(PhoneBook &phonebook) {
 	phonebook.displayGrid();
-	
+
 	if (phonebook.getSize() == 0)
 		return ;
 
 	std::string input;
 	int input_val;
 	Contact c;
-	
-	std::cout << "Contact number > ";
-	std::getline(std::cin, input);
 
-	std::cout << "Contact:" << std::endl;
-	input_val = std::atoi(input.c_str()) % phonebook.getSize();
+	std::cout << "Contact number > ";
+	if (!std::getline(std::cin, input))
+		return ;
+
+	std::cout << "--------------" << std::endl;
+
+	input_val = std::atoi(input.c_str());
+	if (input_val >= phonebook.getSize() || input_val < 0)
+	{
+		std::cout << BYELLOW "Please put an in-range index next time." << std::endl;
+		return ;
+	}
+
 	c = phonebook.getContacts()[input_val];
 	std::cout << "First name: " << c.getFirstName() << std::endl
 		<< "Last name: " << c.getLastName() << std::endl
@@ -97,7 +110,10 @@ int main() {
 
 	while (true) {
 		std::cout << BBLUE "[PhoneBook Interface] > " RESET;
-		std::getline(std::cin, prompt);
+		if (!std::getline(std::cin, prompt)) {
+			std::cout << BLACK "(Aborting...)" RESET << std::endl;
+			return (EXIT_SUCCESS);
+		}
 
 		if (prompt.compare("ADD") == 0)
 			_add_prompt(phonebook);
