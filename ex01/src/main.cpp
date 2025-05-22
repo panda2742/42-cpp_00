@@ -10,5 +10,5 @@ int main() {
 	while (true)
 		phonebook.runInterface();
 
-	return (EXIT_SUCCESS);
+	return EXIT_SUCCESS;
 }
