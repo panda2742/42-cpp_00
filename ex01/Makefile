@@ -14,8 +14,8 @@ NAME	:=	phonebook
 
 override SOURCE_DIR		:=	src/
 override INCLUDE_DIR	:=	include/
-INCLUDES				:=	Contact PhoneBook
-SOURCES					:=	main Contact PhoneBook
+INCLUDES				:=	Contact phonebook_utils PhoneBook
+SOURCES					:=	Contact main PhoneBook utils
 override SOURCE			:=	$(addprefix $(SOURCE_DIR), $(addsuffix .cpp, $(SOURCES)))
 override INCLUDE		:=	$(addprefix $(INCLUDE_DIR), $(addsuffix .hpp, $(INCLUDES)))
 
