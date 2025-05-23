@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	:=	phonebook
+NAME	:=	accounts_logs
 
 override SOURCE_DIR		:=	./
 override INCLUDE_DIR	:=	./

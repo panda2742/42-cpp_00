@@ -64,11 +64,12 @@ void PhoneBook::runInterface() {
 		return _addContactInterface();
 	if (prompt.compare("SEARCH") == 0)
 		return _searchContactInterface();
-	if (prompt.compare("FILL") == 0) {
-		pushRandomContact();
-		_searchContactInterface();
-		return;
-	}
+	// Debugging and evaluation content.
+	// if (prompt.compare("FILL") == 0) {
+	// 	pushRandomContact();
+	// 	_searchContactInterface();
+	// 	return;
+	// }
 	if (prompt.compare("EXIT") == 0) {
 		std::cout << BMAGENTA "Bye bye!" RESET << std::endl;
 		exit(EXIT_SUCCESS);

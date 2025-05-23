@@ -1,4 +1,6 @@
 #include "Account.hpp"
+#include <cstring>
+#include <ctime>
 #include <iostream>
 
 // ************************************************************************** //
@@ -13,7 +15,14 @@ int Account::_totalNbWithdrawals = 0;
 
 // Static methods
 void Account::_displayTimestamp() {
-	std::cout << "[19920104_091532] ";
+	char		buffer[100];
+	std::time_t	now = std::time(NULL);
+	std::tm		*ltm = std::localtime(&now);
+
+	bzero(buffer, sizeof(buffer));
+	std::strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", ltm);
+
+	std::cout << "[" << buffer << "] ";
 }
 
 // Static getters
@@ -50,8 +59,8 @@ Account::Account(int initial_deposit) {
 	_amount = initial_deposit;
 	_accountIndex = _nbAccounts;
 	_nbAccounts++;
-	(void)_nbDeposits;
-	(void)_nbWithdrawals;
+	_totalAmount += initial_deposit;
+
 	_displayTimestamp();
 	std::cout << "index:" << _accountIndex
 			<< ";amount:" << _amount
@@ -69,16 +78,44 @@ Account::~Account() {
 
 // Methods
 void Account::makeDeposit(int deposit) {
-	(void)deposit;
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex
+			<< ";p_amount:" << _amount
+			<< ";deposit:" << deposit;
+
+	_amount += deposit;
+	_totalAmount += deposit;
+	_nbDeposits++;
+	_totalNbDeposits++;
+
+	std::cout << ";amount:" << _amount
+			<< ";nb_deposits:" << _nbDeposits << std::endl;
 }
 
 bool Account::makeWithdrawal(int withdrawal) {
-	(void)withdrawal;
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex
+			<< ";p_amount:" << _amount
+			<< ";withdrawal:";
+
+	if (withdrawal > _amount) {
+		std::cout << "refused" << std::endl;
+		return false;
+	}
+
+	_amount -= withdrawal;
+	_totalAmount -= withdrawal;
+	_nbWithdrawals++;
+	_totalNbWithdrawals++;
+
+	std::cout << withdrawal
+			<< ";amount:" << _amount
+			<< ";nb_withdrawals:" << _nbWithdrawals << std::endl;
 	return true;
 }
 
 int Account::checkAmount() const {
-	return 0;
+	return _amount;
 }
 
 void Account::displayStatus() const {
