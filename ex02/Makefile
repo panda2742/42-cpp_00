@@ -13,7 +13,7 @@
 NAME	:=	accounts_logs
 
 override SOURCE_DIR		:=	src/
-override INCLUDE_DIR	:=	./
+override INCLUDE_DIR	:=	include/
 INCLUDES				:=	Account
 SOURCES					:=	Account tests
 override SOURCE			:=	$(addprefix $(SOURCE_DIR), $(addsuffix .cpp, $(SOURCES)))
