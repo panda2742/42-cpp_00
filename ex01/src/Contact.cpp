@@ -5,6 +5,7 @@
 
 // Constructors & Destructors
 Contact::Contact() {}
+
 Contact::~Contact() {}
 
 // Methods

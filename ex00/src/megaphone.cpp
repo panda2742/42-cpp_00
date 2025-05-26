@@ -12,15 +12,18 @@ int main(int argc, char *argv[]) {
 
 	for (int i = 1; i < argc; i++)
 		std::cout << _capitalize(argv[i]);
+
 	std::cout << std::endl;
 	return EXIT_SUCCESS;
 }
 
 static std::string _capitalize(const std::string &str) {
 	std::string copy = str;
+
 	for (size_t i = 0; i < str.length(); i++) {
-		if (isalpha(copy[i]))
+		if (isalpha(copy[i]) && islower(copy[i]))
 			copy[i] = toupper(copy[i]);
 	}
-	return str;
+
+	return copy;
 }

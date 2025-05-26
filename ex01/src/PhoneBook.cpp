@@ -6,13 +6,16 @@
 
 // Constructors & Destructors
 PhoneBook::PhoneBook() : _size(0), _cursor(0) {}
+
 PhoneBook::~PhoneBook() {}
 
 // Methods
 void PhoneBook::addContact(const Contact &contact) {
 	_contacts[_cursor] = contact;
+
 	if (_size < 8)
 		_size++;
+
 	_cursor = (_cursor + 1) % 8;
 }
 
@@ -149,6 +152,7 @@ void PhoneBook::_searchContactInterface() {
 	std::cout << "Contact number > ";
 	if (!std::getline(std::cin, input))
 		return ;
+
 	input_val = std::atoi(input.c_str());
 	if (input_val >= getSize() || input_val < 0)
 	{

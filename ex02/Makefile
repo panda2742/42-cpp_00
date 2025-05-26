@@ -12,7 +12,7 @@
 
 NAME	:=	accounts_logs
 
-override SOURCE_DIR		:=	./
+override SOURCE_DIR		:=	src/
 override INCLUDE_DIR	:=	./
 INCLUDES				:=	Account
 SOURCES					:=	Account tests
