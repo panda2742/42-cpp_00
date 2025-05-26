@@ -4,8 +4,7 @@
 static std::string _capitalize(const std::string &str);
 
 int main(int argc, char *argv[]) {
-	if (argc == 1)
-	{
+	if (argc == 1) {
 		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
 		return EXIT_SUCCESS;
 	}
@@ -18,12 +17,11 @@ int main(int argc, char *argv[]) {
 }
 
 static std::string _capitalize(const std::string &str) {
-	std::string copy = str;
+	std::string	copy;
+	std::size_t	len = str.length();
 
-	for (size_t i = 0; i < str.length(); i++) {
-		if (isalpha(copy[i]) && islower(copy[i]))
-			copy[i] = toupper(copy[i]);
-	}
+	for (size_t i = 0; i < len; i++)
+		copy.push_back(toupper(str.operator[](i)));
 
 	return copy;
 }
