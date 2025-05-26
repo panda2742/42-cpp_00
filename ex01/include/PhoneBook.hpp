@@ -13,7 +13,7 @@ class PhoneBook {
 	void addContact(const Contact &contact);
 	void displayGrid();
 	void pushRandomContact();
-	void runInterface();
+	int runInterface();
 
 	// Getters
 	const Contact &getContactByIndex(int index) const;
@@ -25,8 +25,8 @@ class PhoneBook {
 	int		_size;
 	int		_cursor;
 
-	void _addContactInterface();
-	void _searchContactInterface();
+	int _addContactInterface();
+	int _searchContactInterface();
 	void _askInput(Contact &c, const std::string &prompt, Setter setter, int *status);
 };
 

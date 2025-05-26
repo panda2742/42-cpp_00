@@ -7,8 +7,8 @@ int main() {
 	PhoneBook phonebook;
 
 	std::srand(std::time(0));
-	while (true)
-		phonebook.runInterface();
+
+	while (phonebook.runInterface() != EXIT_STOP);
 
 	return EXIT_SUCCESS;
 }

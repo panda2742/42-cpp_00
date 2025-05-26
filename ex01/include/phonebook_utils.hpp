@@ -22,6 +22,13 @@
 # define RESET		"\033[0m"
 
 # define ROW_WIDTH 10
+# define EXIT_STOP 2
+# ifndef EXIT_SUCCESS
+#  define EXIT_SUCCESS 0
+# endif
+# ifndef EXIT_FAILURE
+#  define EXIT_FAILURE 1
+# endif
 
 # include <iostream>
 

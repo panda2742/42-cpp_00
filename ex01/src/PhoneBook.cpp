@@ -53,14 +53,14 @@ void PhoneBook::pushRandomContact() {
 	addContact(c);
 }
 
-void PhoneBook::runInterface() {
+int PhoneBook::runInterface() {
 	std::string prompt;
 
 	std::cout << BBLUE "[PhoneBook Interface] > " RESET;
 
 	if (!std::getline(std::cin, prompt)) {
 		std::cout << BLACK "(Aborting...)" RESET << std::endl;
-		exit(EXIT_SUCCESS);
+		return EXIT_STOP;
 	}
 
 	if (prompt.compare("ADD") == 0)
@@ -75,11 +75,13 @@ void PhoneBook::runInterface() {
 	// }
 	if (prompt.compare("EXIT") == 0) {
 		std::cout << BMAGENTA "Bye bye!" RESET << std::endl;
-		exit(EXIT_SUCCESS);
+		return EXIT_STOP;
 	}
 
 	if (prompt.length())
 		errMessage("Hum... `" + prompt + "` is invalid!");
+
+	return EXIT_SUCCESS;
 }
 
 void PhoneBook::_askInput(Contact &c, const std::string &prompt, Setter setter, int *status) {
@@ -92,7 +94,7 @@ void PhoneBook::_askInput(Contact &c, const std::string &prompt, Setter setter, 
 
 		if (!std::getline(std::cin, input)) {
 			std::cout << BLACK "(Aborting...)" RESET << std::endl;
-			*status = EXIT_FAILURE;
+			*status = EXIT_STOP;
 			break ;
 		}
 
@@ -112,7 +114,7 @@ void PhoneBook::_askInput(Contact &c, const std::string &prompt, Setter setter, 
 	}
 }
 
-void PhoneBook::_addContactInterface() {
+int PhoneBook::_addContactInterface() {
 	Contact 	c;
 	std::string input;
 	int			status = EXIT_SUCCESS;
@@ -120,48 +122,54 @@ void PhoneBook::_addContactInterface() {
 	std::cout << BGREEN "Okay! Let's add a new user." RESET << std::endl;
 
 	_askInput(c, "Their first name?", &Contact::setFirstName, &status);
-	if (status == EXIT_FAILURE)
-		return;
+	if (status != EXIT_SUCCESS)
+		return status;
 	_askInput(c, "Their last name?", &Contact::setLastName, &status);
-	if (status == EXIT_FAILURE)
-		return;
+	if (status != EXIT_SUCCESS)
+		return status;
 	_askInput(c, "Their nickname?", &Contact::setNickname, &status);
-	if (status == EXIT_FAILURE)
-		return;
+	if (status != EXIT_SUCCESS)
+		return status;
 	_askInput(c, "Their phone number?", &Contact::setPhoneNumber, &status);
-	if (status == EXIT_FAILURE)
-		return;
+	if (status != EXIT_SUCCESS)
+		return status;
 	_askInput(c, BMAGENTA "Their darkest secret?" RESET, &Contact::setDarkestSecret, &status);
-	if (status == EXIT_FAILURE)
-		return;
+	if (status != EXIT_SUCCESS)
+		return status;
 
 	std::cout << BGREEN << c.getFirstName() << " has been added!" RESET
 		<< std::endl;
 	addContact(c);
+
+	return EXIT_SUCCESS;
 }
 
-void PhoneBook::_searchContactInterface() {
+int PhoneBook::_searchContactInterface() {
 	displayGrid();
 
 	if (getSize() == 0)
-		return ;
+		return EXIT_FAILURE;
 
 	std::string input;
 	int 		input_val;
 
+	std::cout << "                 " BBLACK "(any char will be int-interpreted)" RESET << std::endl;
 	std::cout << "Contact number > ";
-	if (!std::getline(std::cin, input))
-		return ;
-
-	input_val = std::atoi(input.c_str());
-	if (input_val >= getSize() || input_val < 0)
-	{
-		std::cout << BYELLOW "Please put an in-range index next time." << std::endl;
-		return ;
+	if (!std::getline(std::cin, input)) {
+		std::cout << BLACK "(Aborting...)" RESET << std::endl;
+		return EXIT_STOP;
 	}
 
-	std::cout << std::setfill('#') << std::setw(40) << "-" << std::endl;
+	input_val = std::atoi(input.c_str());
+	if (input_val >= getSize() || input_val < 0) {
+		std::cout << BYELLOW "Please put an in-range index next time." << std::endl;
+		return EXIT_FAILURE;
+	}
+
+	std::cout << BBLUE "**************************************************" RESET << std::endl;
 	getContactByIndex(input_val).writeInformation();
+
+	return EXIT_SUCCESS;
 }
 
 // Getters
