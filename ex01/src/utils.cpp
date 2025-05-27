@@ -11,9 +11,9 @@ std::string truncateColumn(const std::string &str) {
 }
 
 void warnMessage(const std::string &str) {
-	std::cerr << BYELLOW "PhoneBook warning: " << str << RESET << std::endl;
+	std::cout << BYELLOW "PhoneBook warning: " << str << RESET << std::endl;
 }
 
 void errMessage(const std::string &str) {
-	std::cerr << BRED "PhoneBook error: " << str << RESET << std::endl;
+	std::cout << BRED "PhoneBook error: " << str << RESET << std::endl;
 }
